@@ -20,5 +20,3 @@
 __author__ = 'Tasuku SUENAGA a.k.a. gunyarakun'
 __email__ = 'tasuku-s-github@titech.ac'
 __version__ = '1.0.8'
-
-from .Init import *
