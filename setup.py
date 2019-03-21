@@ -19,24 +19,50 @@
 
 import os
 import io
-import shogi
+# import shogi
 import setuptools
+from setuptools import setup, Extension
+
+try:
+    from Cython.Distutils import build_ext
+    USE_CYTHON = True
+except ImportError:
+    USE_CYTHON = False
+
+if USE_CYTHON:
+    ext = '.pyx'
+    cmdclass = {'build_ext': build_ext}
+else:
+    ext = '.c'
+    cmdclass = {}
+
+ext_modules = [
+    Extension('shogi.Init', sources=['shogi/Init' + ext]),
+    Extension('shogi.Consts', sources=['shogi/Consts' + ext]),
+    Extension('shogi.CSA', sources=['shogi/CSA' + ext]),
+    Extension('shogi.KIF', sources=['shogi/KIF' + ext]),
+    Extension('shogi.Move', sources=['shogi/Move' + ext]),
+    Extension('shogi.Person', sources=['shogi/Person' + ext]),
+    Extension('shogi.Piece', sources=['shogi/Piece' + ext])
+]
 
 def read_description():
   description = io.open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf-8').read()
   return description
 
-setuptools.setup(
+setup(
     name = 'python-shogi',
-    version = shogi.__version__,
-    author = shogi.__author__,
-    author_email = shogi.__email__,
+    # version = shogi.__version__,
+    # author = shogi.__author__,
+    # author_email = shogi.__email__,
     description = 'A pure Python shogi library with move generation and validation and handling of common formats.',
     long_description = read_description(),
     license = "GPL3",
     keywords = 'shogi csa kif',
     url = 'https://github.com/gunyarakun/python-shogi',
     packages = ['shogi'],
+    ext_modules=ext_modules,
+    cmdclass=cmdclass,
     scripts = [],
     test_suite = 'nose.collector',
     tests_require = ['nose>=1.0', 'mock'],
