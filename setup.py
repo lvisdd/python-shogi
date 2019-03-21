@@ -19,7 +19,7 @@
 
 import os
 import io
-import shogi
+# import shogi
 import setuptools
 from setuptools import setup, Extension
 
@@ -52,9 +52,9 @@ def read_description():
 
 setup(
     name = 'python-shogi',
-    version = shogi.__version__,
-    author = shogi.__author__,
-    author_email = shogi.__email__,
+    # version = shogi.__version__,
+    # author = shogi.__author__,
+    # author_email = shogi.__email__,
     description = 'A pure Python shogi library with move generation and validation and handling of common formats.',
     long_description = read_description(),
     license = "GPL3",
