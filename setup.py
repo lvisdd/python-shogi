@@ -19,7 +19,7 @@
 
 import os
 import io
-# import shogi
+import shogi
 import setuptools
 from setuptools import setup, Extension
 
