@@ -79,6 +79,7 @@ class Parser:
         current_turn_str = None
         moves = []
         lose_color = None
+        cdef line
         for line in csa_str.split('\n'):
             if line == '':
                 pass
@@ -177,6 +178,7 @@ class Parser:
     @staticmethod
     def parse_position(position_block_lines):
         # ex.) P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+        cdef x
         position = {
             'pieces': [0 for x in range(81)],
             'pieces_in_hand': [
@@ -184,6 +186,7 @@ class Parser:
                 collections.Counter(),
             ]
         }
+        cdef line, index
         for line in position_block_lines:
             if line[0] != 'P':
                 if line[0] in COLOR_SYMBOLS:
@@ -244,6 +247,7 @@ class Exporter:
         empty = 0
 
         # Position part.
+        cdef square, color, piece_type
         for square in shogi.SQUARES:
             piece_tuple = pieces[square]
             if piece_tuple is None:
@@ -319,6 +323,7 @@ class TCPProtocol:
         self.heartbeat_thread.start()
 
     def connect(self, host, port):
+        cdef res
         for res in socket.getaddrinfo(host, port, 0, socket.SOCK_STREAM):
             af, socktype, proto, canonname, sa = res
             try:
@@ -433,6 +438,7 @@ class TCPProtocol:
         position_lines = None
         names = [None, None]
         position = None
+        cdef line
         for line in game_summary_block.split('\n'):
             if line == 'BEGIN Game_Summary' or line == 'END Game_Summary':
                 pass
@@ -488,6 +494,7 @@ class TCPProtocol:
 
     def parse_time(self, time_block_lines):
         time = {}
+        cdef line
         for line in time_block_lines:
             (key, value) = line.split(':', 1)
             time[key] = value
